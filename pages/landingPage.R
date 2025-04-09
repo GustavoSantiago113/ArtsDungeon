@@ -1,6 +1,5 @@
 library(htmltools)
 source("components/cards.R")
-source("components/controllers.R")
 
 gallery <- function(data){
     
@@ -16,11 +15,10 @@ gallery <- function(data){
 }
 
 landingPage <- function(data){
+    
     div(
-        controllers(),
-        div(
-            class = "gallery",
-            gallery(data)
-        )
+        class = "gallery",
+        gallery(data)
     )
+
 }

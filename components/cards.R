@@ -8,14 +8,14 @@ cards <- function(name, brandURL, brandLogo, imageURL){
             tags$a(
                 href = brandURL,
                 tags$img(
-                    src = paste0("https://lh3.googleusercontent.com/d/", brandLogo),
+                    src = paste0("https://lh3.googleusercontent.com/d/", brandLogo, sep=""),
                     alt = "",
                     class = "source-icon"
                 )
             )
         ),
         tags$img(
-            src = paste0("https://lh3.googleusercontent.com/d/", imageURL),
+            src = paste0("https://lh3.googleusercontent.com/d/", imageURL, sep=""),
             alt= "",
             class="card-image"
         ),
