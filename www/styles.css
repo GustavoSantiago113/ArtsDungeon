@@ -19,6 +19,10 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 /* Header */
 header {
     background-color: #297373;
@@ -167,6 +171,102 @@ option:hover {
     background: #297373;
     cursor: pointer;
     line-height: 1;
+}
+
+/* Individual Page */
+
+.individual-page-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.return-button-container {
+  margin-bottom: 20px;
+}
+
+.return-button {
+  display: inline-flex;
+  align-items: center;
+  background-color: #297373;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 20px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%);
+}
+
+.disclaimer-box {
+  background-color: #F4D6D6;
+  border: 1px solid #FFB1B1;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.product-display-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #C2C2C2;
+  border-radius: 10px;
+  padding: 25px
+}
+
+.product-logo {
+  width: 100px;
+}
+
+.product-image-container {
+  flex-grow: 1;
+  text-align: center;
+  padding: 20px;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.view-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.view-option-button {
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.action-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.want-one-button {
+  background-color: #297373;
+  color: white;
+  padding: 10px 30px;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 25px;
 }
 
 /* Footer */

@@ -9,8 +9,10 @@ gallery <- function(data){
     brandURL <- data[i, "BrandURL"]
     brandLogo <- data[i, "BrandLogo"]
     image_url <- data[i, "ImageURL"]
+    id <- data[i, "id"]
     
-    cards(name, brandURL, brandLogo, image_url)
+    
+    cards(name, brandURL, brandLogo, image_url, id)
   })
 }
 

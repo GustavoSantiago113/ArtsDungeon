@@ -1,8 +1,39 @@
 library(shiny)
 library(shinyWidgets)
+library(shiny.router)
 source("components/header.R")
 source("components/footer.R")
-source("pages/landingPage.R", local = TRUE)
+source("pages/landingPage.R")
+source("pages/individual.R")
+
+home <- div(
+  div(
+    class = "controls",
+    tags$h3("Controllers: "),
+    selectInput(
+        inputId = "sort_select",
+        label = NULL,
+        choices = list(
+            "--- Order by ---" = "",
+            "Most recent" = "most-recent",
+            "Oldest" = "oldest",
+            "Alphabetical" = "alphabetical",
+            "Reverse alphabetical" = "reverse-alphabetical"
+        ),
+        selected = "most-recent"
+    ),
+    selectInput(
+        inputId = "filter_select",
+        label = NULL,
+        choices = list(
+            "--- Filter ---" = "all",
+            "Loot" = "Loot"
+        ),
+        selected = "all"
+    )
+  ),
+  uiOutput("LandingPage")
+)
 
 ui <- fluidPage(
   
@@ -18,33 +49,9 @@ ui <- fluidPage(
   header(),
   
   ## 2. Inserting Content ----
-  div(
-    div(
-            class = "controls",
-            tags$h3("Controllers: "),
-            selectInput(
-                inputId = "sort_select",
-                label = NULL,
-                choices = list(
-                    "--- Order by ---" = "",
-                    "Most recent" = "most-recent",
-                    "Oldest" = "oldest",
-                    "Alphabetical" = "alphabetical",
-                    "Reverse alphabetical" = "reverse-alphabetical"
-                ),
-                selected = "most-recent"
-            ),
-            selectInput(
-                inputId = "filter_select",
-                label = NULL,
-                choices = list(
-                    "--- Filter ---" = "all",
-                    "Loot" = "Loot"
-                ),
-                selected = "all"
-            )
-        ),
-        uiOutput("LandingPage"),
+  router_ui(
+    route("/", home),
+    route("mini", individual_page())
   ),
   
   ## 3. Inserting Footer ----
@@ -55,6 +62,8 @@ ui <- fluidPage(
 # Server ----
 server <- function(input, output, session) {
   
+  router_server()
+
   minisData <- read.csv("data.csv")
   
   # Create a reactive value to store processed data
@@ -99,6 +108,17 @@ server <- function(input, output, session) {
     }
     
     landingPage(data)
+  })
+
+  output$mini_id_display <- renderText({
+    # Get the current page params
+    params <- get_query_param()
+    
+    if (!is.null(params$id)) {
+      paste("Miniature ID:", params$id)
+    } else {
+      "No ID parameter found"
+    }
   })
 
 }

@@ -1,6 +1,8 @@
 library(htmltools)
+library(tidyverse)
+library(shiny.router)
 
-cards <- function(name, brandURL, brandLogo, imageURL){
+cards <- function(name, brandURL, brandLogo, imageURL, miniId){
     div(
         class = "card",
         div(
@@ -19,9 +21,12 @@ cards <- function(name, brandURL, brandLogo, imageURL){
             alt= "",
             class="card-image"
         ),
-        tags$p(
-            class="card-title",
-            name
+        tags$a(
+            href = route_link(paste("mini?id=", miniId, sep="")),
+            tags$p(
+                class="card-title",
+                name
+            )
         )
     )
 }
