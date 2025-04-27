@@ -1,6 +1,7 @@
 library(shiny)
 library(shinyWidgets)
 library(shiny.router)
+library(dplyr)
 source("components/header.R")
 source("components/footer.R")
 source("pages/landingPage.R")
@@ -51,7 +52,7 @@ ui <- fluidPage(
   ## 2. Inserting Content ----
   router_ui(
     route("/", home),
-    route("mini", individual_page())
+    route("mini", uiOutput("IndividualPage"))
   ),
   
   ## 3. Inserting Footer ----
@@ -110,16 +111,70 @@ server <- function(input, output, session) {
     landingPage(data)
   })
 
-  output$mini_id_display <- renderText({
-    # Get the current page params
+  output$IndividualPage <- renderUI({
     params <- get_query_param()
-    
-    if (!is.null(params$id)) {
-      paste("Miniature ID:", params$id)
-    } else {
-      "No ID parameter found"
-    }
+    individual_page(params$id, minisData)
   })
+
+  current_id <- reactive({
+    params <- get_query_param()
+    id <- params$id
+    return(id)
+  })
+
+  observeEvent(input[[paste0("btn_3d_", current_id())]], {
+        # Get the current product ID
+        identifier <- current_id()
+        
+        # Get the data for this product
+        product_data <- minisData %>% filter(id == identifier)
+        
+        # Create the 3D viewer element
+        # This uses the threejs package, but you could use any 3D visualization approach
+        model_html <- tags$div(
+            class = "model-container",
+            tags$iframe(
+                src = paste0("https://example.com/3d-viewer?model=", product_data$ModelURL),
+                frameborder = "0",
+                style = "width: 100%; height: 100%;"
+            )
+        )
+        
+        # Insert the 3D model into the container
+        removeUI(selector = paste0("#image-container-", identifier, " > *"))
+        insertUI(
+            selector = paste0("#image-container-", identifier),
+            where = "beforeEnd",
+            ui = model_html
+        )
+    })
+    
+    # Handle image view button click (to go back to the image)
+    observeEvent(input[[paste0("btn_image_", current_id())]], {
+        # Get the current product ID
+        identifier <- current_id()
+
+        # Get the data for this product
+        product_data <- minisData %>% filter(id == identifier)
+
+        # Create the image element
+        image_html <- tags$div(
+            img(
+                id = "product-main-image",
+                class = "product-image",
+                src = paste0("https://lh3.googleusercontent.com/d/", product_data$ImageURL),
+                alt = "Product Image"
+            )
+        )
+        
+        # Insert the image into the container
+        removeUI(selector = paste0("#image-container-", identifier, " > *"))
+        insertUI(
+            selector = paste0("#image-container-", identifier),
+            where = "beforeEnd",
+            ui = image_html
+        )
+    })
 
 }
 

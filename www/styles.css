@@ -5,13 +5,27 @@
     margin-left: auto;
     padding-right: 0px;
     padding-left: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
-body {
+html, body{
+    height: 100%;
     margin: 0;
     font-family: "Tiro Kannada", serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+#router-page-wrapper{
+    flex: 1;
 }
 
 code {
@@ -21,6 +35,10 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 
 a {
     text-decoration: none !important;
+}
+
+a:hover {
+    color: white;
 }
 
 /* Header */
@@ -143,7 +161,6 @@ option:hover {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    z-index: 2;
     background: none
 }
 
@@ -181,6 +198,7 @@ option:hover {
   width: 80%;
   margin: 0 auto;
   padding: 20px;
+  flex: 1;
 }
 
 .return-button-container {
@@ -211,7 +229,7 @@ option:hover {
 .product-display-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 20px;
   border: 1px solid #C2C2C2;
   border-radius: 10px;
@@ -223,16 +241,14 @@ option:hover {
 }
 
 .product-image-container {
-  flex-grow: 1;
-  text-align: center;
-  padding: 20px;
+  height: 50vh;
 }
 
 .product-image {
   max-width: 100%;
-  height: auto;
-  border: 1px solid #ccc;
+  object-fit: contain;
   border-radius: 5px;
+  height: 50vh;
 }
 
 .view-options {
@@ -271,9 +287,6 @@ option:hover {
 
 /* Footer */
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
     width: 100%;
     background-color: #297373;
     display: flex;

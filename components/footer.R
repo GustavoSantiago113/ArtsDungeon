@@ -15,7 +15,7 @@ footer <- function(){
             ),
             tags$span(
                 class = "footer-text",
-                "Developed by: Gustavo N. Santiago",
+                "© 2025 Gustavo N. Santiago. All rights reserved",
                 tags$br(),
                 "Under the MIT License"
             ),

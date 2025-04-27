@@ -1,7 +1,12 @@
 library(shiny)
 library(shiny.router)
+library(dplyr)
 
-individual_page <- function() {
+individual_page <- function(identifier, data) {
+
+    dataIndividual <- data %>% filter(id == identifier)
+
+     imageContainerId <- paste0("image-container-", identifier)
 
     div(
         class = "individual-page-container",
@@ -24,43 +29,53 @@ individual_page <- function() {
         # Disclaimer box
         div(
         class = "disclaimer-box",
-        p("Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+        p("Disclaimer: By the user agreement of the studio, I cannot sell this miniature. However, If you want a similar one painted by me, please reach out so we can talk! I will have to charge for shipping and production costs.")
         ),
         
         # Main content area
         div(
-        class = "product-display-container",
-        
-        # Left - Logo
-        div(
-            class = "product-logo",
-            img(src = "lsm_logo.png", alt = "LSM Logo")
-        ),
-        
-        # Center - Product image
-        div(
-            class = "product-image-container",
-            img(
-            id = "product-main-image",
-            class = "product-image",
-            src = "placeholder_image.jpg",
-            alt = "Product Image"
-            ),
-            textOutput("mini_id_display")
-        ),
-        
-        # Right - View options
-        div(
-            class = "view-options",
+            class = "product-display-container",
+            
+            # Left - Logo
             div(
-            class = "view-option-button",
-            "3D"
+                class = "product-logo",
+                tags$a(
+                    href = dataIndividual$BrandURL,
+                    tags$img(
+                        src = paste0("https://lh3.googleusercontent.com/d/", dataIndividual$BrandLogo, sep=""),
+                        alt = "",
+                        class = "source-icon"
+                    )
+                )
             ),
+        
+            # Center - Product image
             div(
-            class = "view-option-button",
-            "360"
+                class = "product-image-container",
+                # Add an ID to target this container specifically
+                id = imageContainerId,
+                img(
+                    id = "product-main-image",
+                    class = "product-image",
+                    src = paste0("https://lh3.googleusercontent.com/d/", dataIndividual$ImageURL, sep=""),
+                    alt = "Product Image"
+                ),
+            ),
+        
+            # Right - View options
+            div(
+                class = "view-options",
+                actionButton(
+                    inputId = paste0("btn_3d_", identifier),
+                    label = "3D",
+                    class = "view-option-button"
+                ),
+                actionButton(
+                    inputId = paste0("btn_image_", identifier),
+                    label = "Image",
+                    class = "view-option-button"
+                )
             )
-        )
         ),
         
         # Bottom - Action button
