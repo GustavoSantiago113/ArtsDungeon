@@ -2,10 +2,14 @@ library(shiny)
 library(shinyWidgets)
 library(shiny.router)
 library(dplyr)
+library(shinyjs)
+library(shinyFeedback)
+library(emayili)
 source("components/header.R")
 source("components/footer.R")
 source("pages/landingPage.R")
 source("pages/individual.R")
+source("components/requestModal.R")
 
 home <- div(
   div(
@@ -38,6 +42,10 @@ home <- div(
 
 ui <- fluidPage(
   
+  ## Setting to use JavaScript ----
+  useShinyjs(),
+  shinyFeedback::useShinyFeedback(),
+
   ## Inserting CSS ----
   tags$head(
     tags$link(
@@ -175,6 +183,64 @@ server <- function(input, output, session) {
             ui = image_html
         )
     })
+
+    observeEvent(input$want_one_button, {request_one()})
+    observe({
+      if(!is.null(input$name) && input$name !="" && !is.null(input$email) && input$email !="" && !is.null(input$message) && input$message!="" && !is.null(input$country) && input$country !=""){
+        enable("sendEmail")
+      }
+      else{
+        disable("sendEmail")
+      }
+    })
+
+    observeEvent(input$sendEmail, {
+    
+      # Disabling button
+      disable("sendEmail")
+      
+      # Inform that the user is being created
+      showNotification("Email being sent", type = "message")
+      
+      tryCatch({
+        print(paste0(input$name,", from ", input$country," with email ", input$email, " sent the following message: ", input$message))
+        try({
+          # Creating the email
+          email <- envelope(
+            to = "gnocerasantiago@gmail.com",
+            from = "gnocerasantiago@gmail.com",
+            subject = paste0("Mini with id=", current_id(), " wanted"),
+            text = paste0(input$name,", from ", input$country," with email ", input$email, " sent the following message: ", input$message)
+          )
+          
+          # Creating the SMTP server object
+          smtp <- gmail(
+            username = Sys.getenv("GMAIL_USERNAME"),
+            password = Sys.getenv("GMAIL_PASSWORD")
+          )
+          
+          # Sending the email
+          smtp(email, verbose = TRUE)
+        }, silent = TRUE)
+        
+      }, error = function(e) {
+        
+        # Inform that the user was created
+        showNotification("Something went wrong, try again later", type = "error")
+        # Close the modal
+        removeModal()
+        
+      }, finally = {
+        
+        # Inform that the user was created
+        showNotification("Email sent", type = "default")
+        # Close the modal
+        removeModal()
+      
+    })
+    
+  })
+
 
 }
 

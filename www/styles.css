@@ -233,7 +233,8 @@ option:hover {
   margin-bottom: 20px;
   border: 1px solid #C2C2C2;
   border-radius: 10px;
-  padding: 25px
+  padding: 25px;
+  background-color: #297373;
 }
 
 .product-logo {
@@ -258,7 +259,7 @@ option:hover {
 }
 
 .view-option-button {
-  background-color: #f0f0f0;
+  background-color: #fff;
   border-radius: 50%;
   width: 50px;
   height: 50px;
