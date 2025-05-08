@@ -51,7 +51,9 @@ ui <- fluidPage(
     tags$link(
       rel  = "stylesheet",
       type = "text/css",
-      href = "styles.css")
+      href = "styles.css"),
+      tags$script(src = "https://unpkg.com/vtk.js"),
+      tags$script(src = "viewer.js")
   ),
   
   ## 1. Inserting Header ----
@@ -131,31 +133,33 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input[[paste0("btn_3d_", current_id())]], {
-        # Get the current product ID
-        identifier <- current_id()
-        
-        # Get the data for this product
-        product_data <- minisData %>% filter(id == identifier)
-        
-        # Create the 3D viewer element
-        # This uses the threejs package, but you could use any 3D visualization approach
-        model_html <- tags$div(
-            class = "model-container",
-            tags$iframe(
-                src = paste0("https://example.com/3d-viewer?model=", product_data$ModelURL),
-                frameborder = "0",
-                style = "width: 100%; height: 100%;"
-            )
-        )
-        
-        # Insert the 3D model into the container
-        removeUI(selector = paste0("#image-container-", identifier, " > *"))
-        insertUI(
-            selector = paste0("#image-container-", identifier),
-            where = "beforeEnd",
-            ui = model_html
-        )
-    })
+      identifier <- current_id()
+      product_data <- minisData %>% filter(id == identifier)
+      viewer_id <- paste0("viewer-", identifier)
+
+      model_html <- tags$div(
+          class = "model-container",
+          id = viewer_id,
+          style = "width: 100%; height: 50vh;"
+      )
+
+      # Insert the 3D model container
+      removeUI(selector = paste0("#image-container-", identifier, " > *"))
+      insertUI(
+          selector = paste0("#image-container-", identifier),
+          where = "beforeEnd",
+          ui = model_html
+      )
+
+      # Delay the message just enough for the DOM to be updated
+      later::later(function() {
+          session$sendCustomMessage("load_pointcloud", list(
+              id = viewer_id,
+              url = paste0("point_clouds/", product_data$Name, ".ply"),
+              type = "ply"
+          ))
+      }, delay = 0.1)  # 100 milliseconds
+  })
     
     # Handle image view button click (to go back to the image)
     observeEvent(input[[paste0("btn_image_", current_id())]], {
