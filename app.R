@@ -19,7 +19,7 @@ home <- div(
         inputId = "sort_select",
         label = NULL,
         choices = list(
-            "--- Order by ---" = "",
+            "Order by" = "",
             "Most recent" = "most-recent",
             "Oldest" = "oldest",
             "Alphabetical" = "alphabetical",
@@ -31,7 +31,7 @@ home <- div(
         inputId = "filter_select",
         label = NULL,
         choices = list(
-            "--- Filter ---" = "all",
+            "Filter by" = "all",
             "Loot" = "Loot"
         ),
         selected = "all"
