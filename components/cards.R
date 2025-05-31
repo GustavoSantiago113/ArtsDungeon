@@ -2,7 +2,7 @@ library(htmltools)
 library(tidyverse)
 library(shiny.router)
 
-cards <- function(name, brandURL, brandLogo, imageURL, miniId){
+cards <- function(name, brandURL, brandLogo, miniId){
     div(
         class = "card",
         div(
@@ -10,14 +10,14 @@ cards <- function(name, brandURL, brandLogo, imageURL, miniId){
             tags$a(
                 href = brandURL,
                 tags$img(
-                    src = paste0("https://lh3.googleusercontent.com/d/", brandLogo, sep=""),
+                    src = paste0("Logos/", brandLogo, sep=""),
                     alt = "",
                     class = "source-icon"
                 )
             )
         ),
         tags$img(
-            src = paste0("https://lh3.googleusercontent.com/d/", imageURL, sep=""),
+            src = paste0("Images/", name, ".png", sep=""),
             alt= "",
             class="card-image"
         ),

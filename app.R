@@ -32,7 +32,8 @@ home <- div(
         label = NULL,
         choices = list(
             "Filter by" = "all",
-            "Loot" = "Loot"
+            "Loot" = "Loot",
+            "Tamiya" = "Tamiya"
         ),
         selected = "all"
     )
@@ -53,7 +54,7 @@ ui <- fluidPage(
       type = "text/css",
       href = "styles.css"),
       tags$script(src = "https://unpkg.com/vtk.js"),
-      tags$script(src = "viewer.js")
+      tags$script(src = "viewer.js"),
   ),
   
   ## 1. Inserting Header ----
@@ -96,9 +97,9 @@ server <- function(input, output, session) {
     # Apply sorting only if we have data
     if (nrow(data) > 0) {
       if (input$sort_select == "most-recent") {
-        data <- data[order(as.Date(data$PaintDate), decreasing = TRUE), ]
+        data <- data[order(as.Date(data$PaintDate, "%m/%d/%y"), decreasing = TRUE), ]
       } else if (input$sort_select == "oldest") {
-        data <- data[order(as.Date(data$PaintDate), decreasing = FALSE), ]
+        data <- data[order(as.Date(data$PaintDate, "%m/%d/%y"), decreasing = FALSE), ]
       } else if (input$sort_select == "alphabetical") {
         data <- data[order(data$Name), ]
       } else if (input$sort_select == "reverse-alphabetical") {
@@ -132,61 +133,34 @@ server <- function(input, output, session) {
     return(id)
   })
 
+  # Handle 3D view button click
   observeEvent(input[[paste0("btn_3d_", current_id())]], {
       identifier <- current_id()
       product_data <- minisData %>% filter(id == identifier)
       viewer_id <- paste0("viewer-", identifier)
-
-      model_html <- tags$div(
-          class = "model-container",
+      image_view_id <- paste0("image-view-", identifier)
+      
+      # Hide image view and show 3D viewer
+      shinyjs::hide(image_view_id)
+      shinyjs::show(viewer_id)
+      
+      # Load the 3D model
+      session$sendCustomMessage("load_pointcloud", list(
           id = viewer_id,
-          style = "width: 100%; height: 50vh;"
-      )
-
-      # Insert the 3D model container
-      removeUI(selector = paste0("#image-container-", identifier, " > *"))
-      insertUI(
-          selector = paste0("#image-container-", identifier),
-          where = "beforeEnd",
-          ui = model_html
-      )
-
-      # Delay the message just enough for the DOM to be updated
-      later::later(function() {
-          session$sendCustomMessage("load_pointcloud", list(
-              id = viewer_id,
-              url = paste0("point_clouds/", product_data$Name, ".ply"),
-              type = "ply"
-          ))
-      }, delay = 0.1)  # 100 milliseconds
+          url = paste0("Reconstructions/", product_data$Name, ".ply"),
+          type = "ply"
+      ))
   })
-    
-    # Handle image view button click (to go back to the image)
-    observeEvent(input[[paste0("btn_image_", current_id())]], {
-        # Get the current product ID
-        identifier <- current_id()
 
-        # Get the data for this product
-        product_data <- minisData %>% filter(id == identifier)
-
-        # Create the image element
-        image_html <- tags$div(
-            img(
-                id = "product-main-image",
-                class = "product-image",
-                src = paste0("https://lh3.googleusercontent.com/d/", product_data$ImageURL),
-                alt = "Product Image"
-            )
-        )
-        
-        # Insert the image into the container
-        removeUI(selector = paste0("#image-container-", identifier, " > *"))
-        insertUI(
-            selector = paste0("#image-container-", identifier),
-            where = "beforeEnd",
-            ui = image_html
-        )
-    })
+  observeEvent(input[[paste0("btn_image_", current_id())]], {
+      identifier <- current_id()
+      viewer_id <- paste0("viewer-", identifier)
+      image_view_id <- paste0("image-view-", identifier)
+      
+      # Hide 3D viewer and show image view
+      shinyjs::hide(viewer_id)
+      shinyjs::show(image_view_id)
+  })
 
     observeEvent(input$want_one_button, {request_one()})
     observe({

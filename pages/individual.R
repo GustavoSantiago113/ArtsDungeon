@@ -6,7 +6,9 @@ individual_page <- function(identifier, data) {
 
     dataIndividual <- data %>% filter(id == identifier)
 
-     imageContainerId <- paste0("image-container-", identifier)
+    imageContainerId <- paste0("image-container-", identifier)
+
+    image_urls <- paste0("Images/", dataIndividual$Name, c("1.jpg", "2.jpg", "3.jpg", "4.jpg"))
 
     div(
         class = "individual-page-container",
@@ -28,8 +30,8 @@ individual_page <- function(identifier, data) {
         
         # Disclaimer box
         div(
-        class = "disclaimer-box",
-        p("Disclaimer: By the user agreement of the studio, I cannot sell this miniature. However, If you want a similar one painted by me, please reach out so we can talk! I will have to charge for shipping and production costs.")
+            class = "disclaimer-box",
+            p("Disclaimer: By the user agreement of the studio, I cannot sell this miniature. However, If you want a similar one painted by me, please reach out so we can talk! I will have to charge for shipping and production costs.")
         ),
         
         # Main content area
@@ -42,7 +44,7 @@ individual_page <- function(identifier, data) {
                 tags$a(
                     href = dataIndividual$BrandURL,
                     tags$img(
-                        src = paste0("https://lh3.googleusercontent.com/d/", dataIndividual$BrandLogo, sep=""),
+                        src = paste0("Logos/", dataIndividual$BrandLogo, sep=""),
                         alt = "",
                         class = "source-icon"
                     )
@@ -52,14 +54,26 @@ individual_page <- function(identifier, data) {
             # Center - Product image
             div(
                 class = "product-image-container",
-                # Add an ID to target this container specifically
-                id = imageContainerId,
-                img(
-                    id = "product-main-image",
-                    class = "product-image",
-                    src = paste0("https://lh3.googleusercontent.com/d/", dataIndividual$ImageURL, sep=""),
-                    alt = "Product Image"
+                id = paste0("image-container-", identifier),
+                
+                # Image carousel (initially visible)
+                div(
+                    id = paste0("image-view-", identifier),
+                    class = "css-carousel-slides",
+                    lapply(image_urls, function(url) {
+                        div(
+                            class = "css-carousel-slide",
+                            tags$img(src = url)
+                        )
+                    })
                 ),
+                
+                # 3D viewer (initially hidden)
+                div(
+                    class="reconstruction-container",
+                    id = paste0("viewer-", identifier),
+                    style="height: 100%"
+                )
             ),
         
             # Right - View options

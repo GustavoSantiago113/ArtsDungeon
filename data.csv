@@ -1,8 +1,10 @@
-﻿id,Name,BrandName,BrandLogo,BrandURL,PaintDate,ImageURL
-1,Uten,Loot,1-Muj3th2S4tXU7y2-PvkH7TnwijltsUy,https://app.lootstudios.com/,2024-09-14,1wpfjTTc9ipCtZF8J5jdRx6oMAxJjZ9Si
-2,Fantasy Adventurer,Loot,1-Muj3th2S4tXU7y2-PvkH7TnwijltsUy,https://app.lootstudios.com/,2024-09-14,1XzApazKEx3HRTtijFGiLfCtu7hfLVjV7
-3,Headsplitter,Loot,1-Muj3th2S4tXU7y2-PvkH7TnwijltsUy,https://app.lootstudios.com/,2024-09-14,19oD0Cjfoh7DU8VJNBTuINaf3JGnNJaZF
-4,Cyberpug,Loot,1-Muj3th2S4tXU7y2-PvkH7TnwijltsUy,https://app.lootstudios.com/,2024-09-14,1-LMe9uEKNyo2-twdDMw7m0PqEGGE3sKJ
-5,Galjin,Loot,1-Muj3th2S4tXU7y2-PvkH7TnwijltsUy,https://app.lootstudios.com/,2024-09-14,1Sfvq7FlAJYGQF5lJ3OgIAeaMJh843rAY
-6,Eve,Loot,1-Muj3th2S4tXU7y2-PvkH7TnwijltsUy,https://app.lootstudios.com/,2025-01-10,1LTyA1vUE0OO8IF2GlbWS4lN9E52qNgIc
-7,Iuchiban,Loot,1-Muj3th2S4tXU7y2-PvkH7TnwijltsUy,https://app.lootstudios.com/,2025-04-01,1qg193bejKFTv7AcsEHLMdIyV4o_nEyg3
+﻿id,Name,BrandName,BrandLogo,BrandURL,PaintDate
+1,Uten,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
+2,Adventurer,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
+3,Headsplitter,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
+4,Cyberpug,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
+5,Galjin,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
+6,Eve,Loot,Loot.png,https://app.lootstudios.com/,1/10/2025
+7,Iuchiban,Loot,Loot.png,https://app.lootstudios.com/,4/1/2025
+8,Daigotsu,Loot,Loot.png,https://app.lootstudios.com/,5/1/2025
+9,Jeep Diorama,Tamiya,Tamiya.png,https://www.tamiya.com/english/index.html,10/3/2025
