@@ -243,10 +243,9 @@ option:hover {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 20px;
-  border: 1px solid #C2C2C2;
+  border: 2px solid #297373;
   border-radius: 10px;
   padding: 25px;
-  background-color: #297373;
 }
 
 .product-logo {
@@ -321,6 +320,10 @@ option:hover {
   border-radius: 5px;
   cursor: pointer;
   font-size: 25px;
+}
+
+.want-one-button:hover{
+    background-color: #41B4B4;
 }
 
 /* Footer */

@@ -15,7 +15,7 @@ Shiny.addCustomMessageHandler("load_pointcloud", function (message) {
 
   const fullScreenRenderer = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
     rootContainer: container,
-    background: [0.161, 0.451, 0.451],
+    background: [1, 1, 1],
     containerStyle: {
       width: "100%",
       height: "100%",
