@@ -288,6 +288,36 @@ option:hover {
     100% { transform: translateX(0); }
 }
 
+.loader-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+.loader {
+    text-align: center;
+    font-size: 16px;
+    color: #6c757d;
+}
+
+/* Optional: Add a spinning animation */
+.loader::after {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #297373;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .view-options {
   display: flex;
   flex-direction: column;

@@ -6,7 +6,7 @@ individual_page <- function(identifier, data) {
 
     dataIndividual <- data %>% filter(id == identifier)
 
-    imageContainerId <- paste0("image-container-", identifier)
+    imageContainerId <- paste0("image-container-", identifier) # nolint
 
     image_urls <- paste0("Images/", dataIndividual$Name, c("1.jpg", "2.jpg", "3.jpg", "4.jpg"))
 
@@ -68,11 +68,21 @@ individual_page <- function(identifier, data) {
                     })
                 ),
                 
+                div(
+                    id = paste0("loader-", identifier),
+                    class = "loader-container",
+                    style = "display: none; height: 100%; display: flex; align-items: center; justify-content: center;",
+                    div(
+                        class = "loader",
+                        "Loading 3D model..."
+                    )
+                ),
+
                 # 3D viewer (initially hidden)
                 div(
-                    class="reconstruction-container",
+                    class = "reconstruction-container",
                     id = paste0("viewer-", identifier),
-                    style="height: 100%"
+                    style = "height: 100%; display: none;"
                 )
             ),
         
