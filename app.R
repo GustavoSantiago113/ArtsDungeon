@@ -33,7 +33,8 @@ home <- div(
       choices = list(
         "Filter by" = "all",
         "Loot" = "Loot",
-        "Tamiya" = "Tamiya"
+        "Tamiya" = "Tamiya",
+        "MZ4250" = "MZ4250"
       ),
       selected = "all"
     )
@@ -97,10 +98,10 @@ server <- function(input, output, session) { # nolint
     # Apply sorting only if we have data
     if (nrow(data) > 0) {
       if (input$sort_select == "most-recent") {
-        data <- data[order(as.Date(data$PaintDate, "%m/%d/%y"),
+        data <- data[order(as.Date(data$PaintDate, "%Y/%m/%d"),
                            decreasing = TRUE), ]
       } else if (input$sort_select == "oldest") {
-        data <- data[order(as.Date(data$PaintDate, "%m/%d/%y"),
+        data <- data[order(as.Date(data$PaintDate, "%Y/%m/%d"),
                            decreasing = FALSE), ]
       } else if (input$sort_select == "alphabetical") {
         data <- data[order(data$Name), ]
