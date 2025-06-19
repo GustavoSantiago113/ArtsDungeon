@@ -10,7 +10,7 @@
 
 ## Purposes
 
-The main purpose of this app is to showcase the miniatures I paint. After painting them, I take the pictures using my cellphone, a lamp and a black background. Then, I use [MiniAid]() to segment the main image and 3D reconstruct the miniature. Secondary purposes are:
+The main purpose of this app is to showcase the miniatures I paint. After painting them, I take the pictures using my cellphone, a lamp and a black background. Then, I use [MiniAid](https://github.com/GustavoSantiago113/MiniAid) to segment the main image and 3D reconstruct the miniature. Secondary purposes are:
 
 * Connecting with other miniature painters;
 * Improving my Shiny R skills;
