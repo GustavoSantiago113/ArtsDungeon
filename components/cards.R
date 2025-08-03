@@ -2,31 +2,19 @@ library(htmltools)
 library(tidyverse)
 library(shiny.router)
 
-cards <- function(name, brandURL, brandLogo, miniId){
+cards <- function(name, miniId, coverURL){
     div(
-        class = "card",
-        div(
-            class = "card-header",
-            tags$a(
-                href = brandURL,
-                tags$img(
-                    src = paste0("Logos/", brandLogo, sep=""),
-                    alt = "",
-                    class = "source-icon"
-                )
-            )
-        ),
+        class = 'miniature-card block bg-gray-800 rounded-xl shadow-md overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transform transition-all duration-300 ease-in-out',
         tags$img(
-            src = paste0("Images/", name, ".png", sep=""),
+            src = paste0("https://lh3.googleusercontent.com/d/", coverURL, sep=""),
             alt= "",
-            class="card-image"
+            class="w-full object-contain rounded-t-xl"
         ),
-        tags$a(
-            href = route_link(paste("mini?id=", miniId, sep="")),
-            tags$p(
-                class="card-title",
-                name
-            )
+        div(
+            class="p-4 flex-grow flex flex-col justify-center",
+            h3(class="text-xl font-semibold text-gray-200 truncate", name),
+            p(class="text-sm text-gray-400 mt-1", "Click for details")
         )
-    )
+    ) %>% tags$a(
+            href = route_link(paste("mini?id=", miniId, sep="")))
 }

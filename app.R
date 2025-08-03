@@ -11,10 +11,9 @@ source("pages/landingPage.R")
 source("pages/individual.R")
 source("components/requestModal.R")
 
-home <- div(
+home <- tags$main(
   div(
     class = "controls",
-    tags$h3("Controllers: "),
     selectInput(
       inputId = "sort_select",
       label = NULL,
@@ -33,7 +32,6 @@ home <- div(
       choices = list(
         "Filter by" = "all",
         "Loot" = "Loot",
-        "Tamiya" = "Tamiya",
         "MZ4250" = "MZ4250"
       ),
       selected = "all"
@@ -50,25 +48,32 @@ ui <- fluidPage(
 
   ## Inserting CSS ----
   tags$head(
+    tags$meta(charset="UTF-8"),
+    tags$meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+    tags$title("Art's Dungeon"),
     tags$link(
               rel = "stylesheet",
               type = "text/css",
               href = "styles.css"),
     tags$script(src = "https://unpkg.com/vtk.js"),
     tags$script(src = "viewer.js"),
+    tags$script(src = "https://cdn.tailwindcss.com")
   ),
 
-  ## 1. Inserting Header ----
-  header(),
+  tags$body(
+    class="min-h-screen flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8",
+    ## 1. Inserting Header ----
+    header(),
 
-  ## 2. Inserting Content ----
-  router_ui(
-    route("/", home),
-    route("mini", uiOutput("IndividualPage"))
-  ),
+    ## 2. Inserting Content ----
+    router_ui(
+      route("/", home),
+      route("mini", uiOutput("IndividualPage"))
+    ),
 
-  ## 3. Inserting Footer ----
-  footer(),
+    ## 3. Inserting Footer ----
+    footer()
+  )
 
 )
 

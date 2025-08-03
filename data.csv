@@ -1,12 +1,12 @@
-﻿id,Name,BrandName,BrandLogo,BrandURL,PaintDate
-1,Uten,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
-2,Adventurer,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
-3,Headsplitter,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
-4,Cyberpug,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
-5,Galjin,Loot,Loot.png,https://app.lootstudios.com/,9/14/2024
-6,Eve,Loot,Loot.png,https://app.lootstudios.com/,1/10/2025
-7,Iuchiban,Loot,Loot.png,https://app.lootstudios.com/,4/1/2025
-8,Daigotsu,Loot,Loot.png,https://app.lootstudios.com/,5/1/2025
-9,Jeep Diorama,Tamiya,Tamiya.png,https://www.tamiya.com/english/index.html,3/1/2025
-10,Gnoll,MZ4250,MZ4250.png,https://linktr.ee/mz4250,6/1/2025
-11,Legends of the five rings Diorama,Loot,Loot.png,https://app.lootstudios.com/,6/10/2025
+﻿id,Name,BrandName,BrandLogo,BrandURL,PaintDate, CoverURL, ReconstrictionURL, ImagesURL
+1,Uten,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1LU-zUFJbQvCK_rH87ZSXePujdpOFd3rJ,1fjw9W_Pto4kMWHljuv-QYGtzGHq_bCTM,1yP4MGjehAPZnVtMY4sZqJYqz96J-ztlU;1A9hZuZC09qVn0_Gg1SHq6QguCQS12MFf;1z3YGVIWvunGyYcHBcaEhq98Fq1ST-tKO;1PCWJ8thWnVgTBJyg-cF4wbeqN7mGviXi
+2,Adventurer,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1LHFNNs9xnnJaEkQVgGi4BTHoFNtc4-cR,1Dpj-rT093NZLwmwP0WVNYrzuV_DITWAp,
+3,Headsplitter,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,17_XFZBZSO03nPDf1vW2Qk9IyZLrutU2f,1EbtTrOwY_hj-QL_K-et4b-YtonsHzxcW,
+4,CyberPug,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1pisEJrb-wDwW1noCaSb6uWAOdR8G697l,1RR5I-FXzzY64BPvNGJjwgO-H4h05HxgD,
+5,Galjin,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1RBnp_U-iM-3rmo6XpxM48ENOV4TRYTx1,1zw9SnTnI3iFM1IEpH-I43l69_JIlV8AH,
+6,Eve,Loot,Loot.png,https://app.lootstudios.com/,2025/1/10,1zIi0Glsm1-VE7Y2q1Ku21QDNTOHrVJfW,1PgPhmikh8YUzp2sfXexfTSA44RMJpoUz,
+7,Iuchiban,Loot,Loot.png,https://app.lootstudios.com/,2025/4/1,1CghsPvdO2UaQO8Lo5gYpMuOUFvAS8oAQ,1JaLz9oo9aHgHaUFBJSN8Q8BgknCRDeYq,
+8,Daigotsu,Loot,Loot.png,https://app.lootstudios.com/,2025/5/1,1UfdXYXrFVfDJWuvoB_oHiR0Zv3vSgDmz,1i8r2vMRKF6ujrDYk7imy1cHT3mA9JslF,
+9,Gnoll,MZ4250,MZ4250.png,https://linktr.ee/mz4250,2025/6/1,1X7RpgIpYhOGpJExK13AnbDA36dg2BQWU,1v8rJ8n4wpeVzizCs4KliQS-6zhmXC_zF,
+10,Werewolf,MZ4250,MZ4250.png,https://linktr.ee/mz4250,2025/6/16,1pJzf7lPHWJMW242nweAiJgRvLNMaLF3f,1jpKl380T2kJGXq7IWI3VbyHtNYNI9AvU,11yM7pkkbgTsqJuhe5meU5QnwUjjxud1n;1V0Ktury4u6hi3Uxxys81vdavJv3GaM9Z;14hJlkSfTy-l7uLfHJTb3qexUYHWKTanB;1YaU3HrHTMJy2_6wkOd5P7Q5hqSwI2bTN
+11,Cascadia,Loot,Loot.png,https://app.lootstudios.com/,2025/7/14,1HId55Mf2ZCeyFwkTKAFgjozUXIORkNhn,1OVTB9JP5H-ue4Z7NNx75sPkSB5m1FZDe,
