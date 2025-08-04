@@ -11,7 +11,7 @@ header <- function(){
             ),
             p(
                 class="text-lg sm:text-xl text-gray-400 mb-2",
-                "Step into the shadows and explore my collection of hand-painted miniature figures. Click on any creature to unveil its secrets!"
+                "Step into the shadows and explore my collection of hand-painted miniature figures."
             ),
             p(
                 class="text-md sm:text-lg text-gray-500",

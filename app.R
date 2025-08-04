@@ -61,7 +61,6 @@ ui <- fluidPage(
   ),
 
   tags$body(
-    class="min-h-screen flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8",
     ## 1. Inserting Header ----
     header(),
 

@@ -11,7 +11,7 @@ individual_page <- function(identifier, data) {
     image_urls <- paste0("Images/", dataIndividual$Name, c("1.jpg", "2.jpg", "3.jpg", "4.jpg"))
 
     div(
-        class = "individual-page-container",
+        class="w-full flex-grow bg-gray-800 p-8 rounded-xl shadow-lg",
         
         # Return button
         div(
@@ -36,68 +36,65 @@ individual_page <- function(identifier, data) {
         
         # Main content area
         div(
-            class = "product-display-container",
+            class="flex flex-col lg:flex-row gap-8",
             
-            # Left - Logo
+            # Left Column: 3D Reconstruction and Main Image
             div(
-                class = "product-logo",
-                tags$a(
-                    href = dataIndividual$BrandURL,
-                    tags$img(
-                        src = paste0("Logos/", dataIndividual$BrandLogo, sep=""),
-                        alt = "",
-                        class = "source-icon"
-                    )
-                )
-            ),
-        
-            # Center - Product image
-            div(
-                class = "product-image-container",
-                id = paste0("image-container-", identifier),
-                
-                # Image carousel (initially visible)
-                div(
-                    id = paste0("image-view-", identifier),
-                    class = "css-carousel-slides",
-                    lapply(image_urls, function(url) {
-                        div(
-                            class = "css-carousel-slide",
-                            tags$img(src = url)
-                        )
-                    })
+                class="flex-1 flex flex-col items-center gap-6",
+                tags$h2(
+                    class="text-3xl font-bold text-white mb-4",
+                    dataIndividual$Name
                 ),
-                
                 div(
-                    id = paste0("loader-", identifier),
-                    class = "loader-container",
-                    style = "display: none; height: 100%; display: flex; align-items: center; justify-content: center;",
+                    class="w-full rounded-xl shadow-lg",
                     div(
-                        class = "loader",
-                        "Loading 3D model..."
+                        id = paste0("loader-", identifier),
+                        class = "loader-container",
+                        style = "display: none; height: 100%; display: flex; align-items: center; justify-content: center;",
+                        div(
+                            class = "loader",
+                            "Loading 3D model..."
+                        )
+                    ),
+
+                    # 3D viewer (initially hidden)
+                    div(
+                        class = "reconstruction-container",
+                        id = paste0("viewer-", identifier),
+                        style = "height: 100%; display: none;"
                     )
                 ),
-
-                # 3D viewer (initially hidden)
+                tags$p(
+                    class="text-sm text-gray-400 mt-2",
+                    "(Drag to rotate 3D model - Placeholder for PLY reconstruction)"
+                ),
                 div(
-                    class = "reconstruction-container",
-                    id = paste0("viewer-", identifier),
-                    style = "height: 100%; display: none;"
+                    class="w-full bg-gray-700 p-4 rounded-lg shadow-md flex items-center gap-4",
+                    tags$a(
+                        href = dataIndividual$BrandURL,
+                        tags$img(
+                            src = paste0("Logos/", dataIndividual$BrandLogo, sep=""),
+                            alt = "",
+                            class = "source-icon"
+                        )
+                    )
+                ),
+                tags$p(
+                    class="text-md text-gray-400",
+                    paste0("Painted On:", dataIndividual$PaintDate)
                 )
             ),
-        
-            # Right - View options
+
+            # Right Column: Additional Images
             div(
-                class = "view-options",
-                actionButton(
-                    inputId = paste0("btn_3d_", identifier),
-                    label = "3D",
-                    class = "view-option-button"
+                class="flex-1 flex flex-col gap-6",
+                tags$h3(
+                    class="text-2xl font-bold text-white mb-2",
+                    "Additional Views"
                 ),
-                actionButton(
-                    inputId = paste0("btn_image_", identifier),
-                    label = "Image",
-                    class = "view-option-button"
+                div(
+                    class="grid grid-cols-1 sm:grid-cols-2 gap-4",
+                    # Aditional Images Here
                 )
             )
         ),
