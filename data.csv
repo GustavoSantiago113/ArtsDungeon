@@ -1,12 +1,12 @@
 ﻿id,Name,BrandName,BrandLogo,BrandURL,PaintDate, CoverURL, ReconstrictionURL, ImagesURL
 1,Uten,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1LU-zUFJbQvCK_rH87ZSXePujdpOFd3rJ,1fjw9W_Pto4kMWHljuv-QYGtzGHq_bCTM,1yP4MGjehAPZnVtMY4sZqJYqz96J-ztlU;1A9hZuZC09qVn0_Gg1SHq6QguCQS12MFf;1z3YGVIWvunGyYcHBcaEhq98Fq1ST-tKO;1PCWJ8thWnVgTBJyg-cF4wbeqN7mGviXi
-2,Adventurer,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1LHFNNs9xnnJaEkQVgGi4BTHoFNtc4-cR,1Dpj-rT093NZLwmwP0WVNYrzuV_DITWAp,
-3,Headsplitter,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,17_XFZBZSO03nPDf1vW2Qk9IyZLrutU2f,1EbtTrOwY_hj-QL_K-et4b-YtonsHzxcW,
-4,CyberPug,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1pisEJrb-wDwW1noCaSb6uWAOdR8G697l,1RR5I-FXzzY64BPvNGJjwgO-H4h05HxgD,
-5,Galjin,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1RBnp_U-iM-3rmo6XpxM48ENOV4TRYTx1,1zw9SnTnI3iFM1IEpH-I43l69_JIlV8AH,
-6,Eve,Loot,Loot.png,https://app.lootstudios.com/,2025/1/10,1zIi0Glsm1-VE7Y2q1Ku21QDNTOHrVJfW,1PgPhmikh8YUzp2sfXexfTSA44RMJpoUz,
-7,Iuchiban,Loot,Loot.png,https://app.lootstudios.com/,2025/4/1,1CghsPvdO2UaQO8Lo5gYpMuOUFvAS8oAQ,1JaLz9oo9aHgHaUFBJSN8Q8BgknCRDeYq,
-8,Daigotsu,Loot,Loot.png,https://app.lootstudios.com/,2025/5/1,1UfdXYXrFVfDJWuvoB_oHiR0Zv3vSgDmz,1i8r2vMRKF6ujrDYk7imy1cHT3mA9JslF,
-9,Gnoll,MZ4250,MZ4250.png,https://linktr.ee/mz4250,2025/6/1,1X7RpgIpYhOGpJExK13AnbDA36dg2BQWU,1v8rJ8n4wpeVzizCs4KliQS-6zhmXC_zF,
+2,Adventurer,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1LHFNNs9xnnJaEkQVgGi4BTHoFNtc4-cR,1Dpj-rT093NZLwmwP0WVNYrzuV_DITWAp,1LzJQjvoya6yqNbYkB3lnr-s4jB3nn4lQ;1yNuevl2EU5L8nm42TJBJE5pl31asSxtE;1vP9MTFF36bUuXOXHeKfamLnri98WIKvx;1kQ4cmzYa9b7cmE3cQlazEpF-HnJBvcR2
+3,Headsplitter,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,17_XFZBZSO03nPDf1vW2Qk9IyZLrutU2f,1EbtTrOwY_hj-QL_K-et4b-YtonsHzxcW,123ICrQ6wB_G8Xv5InMWOY7Db77FtxUiq;1iRXE-g1ZFiVygUK5VKK1ZCbCWOdDMYgF/view?usp=sharing;1x8QBcrQAVNzCUH9FipLbS3qE9MD-OULs;1Fhh6TsmG1p_XNLql6-gvvMU5D7Z9UvWy
+4,CyberPug,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1pisEJrb-wDwW1noCaSb6uWAOdR8G697l,1RR5I-FXzzY64BPvNGJjwgO-H4h05HxgD,1l5AzPtUR_goxTzwcvZY6hcz_imLtWh7R;1h3ZmrqXuWrSdEXubA_UQlD0fY7F8v150;1m6BctUY6APz4b5BKzoFCDQhTfaCDbjnh;1j007pSFOtKn4BUXQgLXD6GD2YYldxTag
+5,Galjin,Loot,Loot.png,https://app.lootstudios.com/,2024/9/14,1RBnp_U-iM-3rmo6XpxM48ENOV4TRYTx1,1zw9SnTnI3iFM1IEpH-I43l69_JIlV8AH,1s6y9ihvYTxplhl0mJ6IS3af4J4vt7vsv;1iH6MW87YL0NIIH6YZy2HPtPRbS1D67xH;1x2XHybpbx160_trGfay9Ewb0YOezTs8F;1X08ZyMSqRlkqvNp2BGIuVnsfT5Uoeoyj
+6,Eve,Loot,Loot.png,https://app.lootstudios.com/,2025/1/10,1zIi0Glsm1-VE7Y2q1Ku21QDNTOHrVJfW,1PgPhmikh8YUzp2sfXexfTSA44RMJpoUz,156mx_QO21om1Ywb6zG4law_guV5Wd6sh;1FVeR3eXZfEBf9KtMf94ekiG5JdkTsSu1;1t0270Enm-5mIGVtnE6zL1VyzEgbXePIt;1ZTZL9LWXrZeCMUCS68-QjCTDW2wZjsxU
+7,Iuchiban,Loot,Loot.png,https://app.lootstudios.com/,2025/4/1,1CghsPvdO2UaQO8Lo5gYpMuOUFvAS8oAQ,1JaLz9oo9aHgHaUFBJSN8Q8BgknCRDeYq,1yVV6gLoD9p5Y1YAOGlwj9U8DDEFCm17U;1cVs2-cLoxyHY-mUuwSLHU53kunhB83A5;1RPbypHl-tnOqihsfn4tlR5sWhs5OmR__;1tpGQtIvVlk8UdoqMq1_LKtqSs-eghKZJ
+8,Daigotsu,Loot,Loot.png,https://app.lootstudios.com/,2025/5/1,1UfdXYXrFVfDJWuvoB_oHiR0Zv3vSgDmz,1i8r2vMRKF6ujrDYk7imy1cHT3mA9JslF,11zdpk5pNLRLl-FiETszJWy3O8rHMDVBt;19n8F8KDIYM1UHJ30DBz2xe55OwAGeNHE;1ZL1ve7VntvueLTKyl4HOXcQ7UHfER4Za;1MeOZp3jUsMTDHlHLDSSgrnPS_G4n2N-4
+9,Gnoll,MZ4250,MZ4250.png,https://linktr.ee/mz4250,2025/6/1,1X7RpgIpYhOGpJExK13AnbDA36dg2BQWU,1v8rJ8n4wpeVzizCs4KliQS-6zhmXC_zF,1rDUFx766Dq_SlDjqpGZYEDMRIy_uMj3Y;15A8qvgoDXNJYdsRAJWvSZz1kTCTZspL-;1EG-WNgS7GLzda_bkEnIyf4nEjxU0473-;1s_1dNg880wpU8cU1Q0kw6xDyPns4Lj65
 10,Werewolf,MZ4250,MZ4250.png,https://linktr.ee/mz4250,2025/6/16,1pJzf7lPHWJMW242nweAiJgRvLNMaLF3f,1jpKl380T2kJGXq7IWI3VbyHtNYNI9AvU,11yM7pkkbgTsqJuhe5meU5QnwUjjxud1n;1V0Ktury4u6hi3Uxxys81vdavJv3GaM9Z;14hJlkSfTy-l7uLfHJTb3qexUYHWKTanB;1YaU3HrHTMJy2_6wkOd5P7Q5hqSwI2bTN
-11,Cascadia,Loot,Loot.png,https://app.lootstudios.com/,2025/7/14,1HId55Mf2ZCeyFwkTKAFgjozUXIORkNhn,1OVTB9JP5H-ue4Z7NNx75sPkSB5m1FZDe,
+11,Cascadia,Loot,Loot.png,https://app.lootstudios.com/,2025/7/14,1HId55Mf2ZCeyFwkTKAFgjozUXIORkNhn,1OVTB9JP5H-ue4Z7NNx75sPkSB5m1FZDe,1ADnUEIaA7L1zabBV0k4-WyZrYsHq54ol;1O1-eRD3zYgjEuWMAthuVjqaNcrhMRmp3/view?usp=sharing;1L52uL8HqCeKTPnZkLc0HJU_3KXcBNWWY;1okoAzZU20IfnIhnS4LSTvqSmGHjhAUvn
