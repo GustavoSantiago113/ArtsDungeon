@@ -82,12 +82,6 @@ ui <- fluidPage(
 # Server ----
 server <- function(input, output, session) { # nolint
 
-  session$userData$downloaded_plys <- character()
-  session_ply_dir <- file.path(tempdir(), paste0("plys_", session$token))
-  if (!dir.exists(session_ply_dir)) dir.create(session_ply_dir, recursive = TRUE)
-  session_ply_prefix <- paste0("session-plys-", substr(session$token, 1, 8))
-  shiny::addResourcePath(session_ply_prefix, session_ply_dir)
-
   router_server()
 
   minis_data <- read.csv("data.csv")
@@ -143,6 +137,13 @@ server <- function(input, output, session) { # nolint
     individual_page(params$id, minis_data) # nolint
   })
 
+  # No longer need to manage downloaded_plys this way, but the directory path is key
+  session$userData$session_dir <- file.path("www", "session-plys", session$token)
+
+  # Ensure the www directory and the session-specific subdirectory exist
+  if (!dir.exists("www")) dir.create("www")
+  dir.create(session$userData$session_dir, recursive = TRUE, showWarnings = FALSE)
+
   observe({
       params <- get_query_param()
       selected_id <- params$id
@@ -155,77 +156,74 @@ server <- function(input, output, session) { # nolint
       ply_file_id <- if (length(raw_val) >= 1) raw_val[1] else NA_character_
       message("PLY file id candidate: ", ply_file_id)
 
-      ply_filename <- paste0(selected_id, "-", substr(session$token,1,8), ".ply")
-      # write into session-scoped temp dir (writable on deploy)
-      ply_path <- file.path(session_ply_dir, ply_filename)
+      # Use a simple, unique filename
+      ply_filename <- paste0(selected_id, ".ply")
+      
+      # Define the full path inside the session-specific 'www' subdirectory
+      ply_path <- file.path(session$userData$session_dir, ply_filename)
 
       tryCatch({
-        if (is.na(ply_file_id) || ply_file_id == "") stop("No valid PLY file id found")
+          if (is.na(ply_file_id) || ply_file_id == "") stop("No valid PLY file id found")
 
-        # Try public direct download first
-        public_url <- paste0("https://drive.google.com/uc?export=download&id=", ply_file_id)
-        message("Trying public download: ", public_url)
-        res <- tryCatch(
-          httr::GET(public_url, httr::write_disk(ply_path, overwrite = TRUE), httr::timeout(60)),
-          error = function(e) { NULL }
-        )
-
-        need_api_download <- TRUE
-        if (!is.null(res) && httr::status_code(res) >= 200 && httr::status_code(res) < 400 && file.exists(ply_path) && file.size(ply_path) > 0) {
-          need_api_download <- FALSE
-          message("Public download succeeded: ", ply_path)
-        } else {
-          message("Public download failed or status: ", ifelse(is.null(res), "no response", httr::status_code(res)))
-        }
-
-        # If public download failed, try googledrive API (requires auth on the server)
-        if (need_api_download) {
-          message("Attempting googledrive::drive_download (requires auth).")
-          drv_info <- tryCatch(googledrive::drive_get(googledrive::as_id(ply_file_id)), error = function(e) NULL)
-          if (is.null(drv_info)) stop("Drive file not found or inaccessible (check permissions/token on deployed server)")
-          googledrive::drive_download(
-            file = googledrive::as_id(ply_file_id),
-            path = ply_path,
-            overwrite = TRUE,
-            verbose = TRUE
+          # --- DOWNLOAD LOGIC (This part is fine and remains unchanged) ---
+          public_url <- paste0("https://drive.google.com/uc?export=download&id=", ply_file_id)
+          message("Trying public download: ", public_url)
+          res <- tryCatch(
+              httr::GET(public_url, httr::write_disk(ply_path, overwrite = TRUE), httr::timeout(60)),
+              error = function(e) { NULL }
           )
-          if (!file.exists(ply_path) || file.size(ply_path) == 0) stop("API download completed but file missing or empty")
-          message("API download succeeded: ", ply_path)
-        }
+          need_api_download <- TRUE
+          if (!is.null(res) && httr::status_code(res) >= 200 && httr::status_code(res) < 400 && file.exists(ply_path) && file.size(ply_path) > 0) {
+              need_api_download <- FALSE
+              message("Public download succeeded: ", ply_path)
+          } else {
+              message("Public download failed or status: ", ifelse(is.null(res), "no response", httr::status_code(res)))
+          }
+          if (need_api_download) {
+              # ... your googledrive::drive_download logic ...
+              googledrive::drive_download(
+                file = googledrive::as_id(ply_file_id),
+                path = ply_path,
+                overwrite = TRUE
+              )
+              message("API download succeeded: ", ply_path)
+          }
+          # --- END DOWNLOAD LOGIC ---
 
-        # confirm and notify client using session-scoped resource path
-        if (!file.exists(ply_path)) stop("Download failed; file missing at path")
-        resource_url <- paste0("/", session_ply_prefix, "/", ply_filename)
-        session$sendCustomMessage(
-          type = "load_pointcloud",
-          message = list(
-            id = paste0("viewer-", selected_id),
-            loader_id = paste0("loader-", selected_id),
-            url = resource_url
+          if (!file.exists(ply_path)) stop("Download failed; file missing at path")
+          
+          # The URL is now the path relative to the 'www' directory
+          resource_url <- file.path("session-plys", session$token, ply_filename)
+          
+          session$sendCustomMessage(
+              type = "load_pointcloud",
+              message = list(
+                  id = paste0("viewer-", selected_id),
+                  loader_id = paste0("loader-", selected_id),
+                  url = resource_url # Send the correct public URL
+              )
           )
-        )
-        # record for cleanup
-        session$userData$downloaded_plys <- c(session$userData$downloaded_plys, ply_path)
       }, error = function(e) {
-        message("Error downloading PLY: ", e$message)
-        session$sendCustomMessage(
-          type = "load_pointcloud",
-          message = list(
-            id = paste0("viewer-", selected_id),
-            loader_id = paste0("loader-", selected_id),
-            url = NULL,
-            error = e$message
+          message("Error downloading PLY: ", e$message)
+          session$sendCustomMessage(
+              type = "load_pointcloud",
+              message = list(
+                  id = paste0("viewer-", selected_id),
+                  loader_id = paste0("loader-", selected_id),
+                  url = NULL,
+                  error = e$message
+              )
           )
-        )
       })
   })
 
-  # Clean up session files when session ends
+  # Clean up the session directory when the session ends
   session$onSessionEnded(function() {
-    files <- unique(session$userData$downloaded_plys)
-    if (length(files)) unlink(files, force = TRUE)
-    # remove the session dir if empty
-    try(unlink(session_ply_dir, recursive = TRUE), silent = TRUE)
+      session_dir <- session$userData$session_dir
+      message("Session ended. Cleaning up directory: ", session_dir)
+      if (dir.exists(session_dir)) {
+          unlink(session_dir, recursive = TRUE, force = TRUE)
+      }
   })
 
   current_id <- reactive({

@@ -1,13 +1,24 @@
 Shiny.addCustomMessageHandler("load_pointcloud", function (message) {
+
     const containerId = message.id;
     const loaderId = message.loader_id;
     const modelUrl = message.url;
+    console.log("Viewer will fetch modelUrl:", modelUrl);
 
     const container = document.getElementById(containerId);
     const loader = document.getElementById(loaderId);
-    
+
     if (!container) {
         console.error("Container not found:", containerId);
+        return;
+    }
+
+    // Handle missing URL early
+    if (!modelUrl) {
+        console.error("No model URL provided, showing error UI");
+        if (loader) loader.style.display = 'none';
+        container.style.display = 'block';
+        container.innerHTML = '<div style="padding:20px;text-align:center;color:#dc3545;">3D model unavailable</div>';
         return;
     }
 
@@ -27,15 +38,10 @@ Shiny.addCustomMessageHandler("load_pointcloud", function (message) {
         })
         .then(buffer => {
             console.log("Buffer received, showing viewer and initializing VTK...");
-            
-            // Hide loader first
-            if (loader) {
-                loader.style.display = 'none';
-            }
-            
-            // Show the container using direct DOM manipulation
+
+            if (loader) loader.style.display = 'none';
             container.style.display = 'block';
-            
+
             // Initialize VTK
             const fullScreenRenderer = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
                 rootContainer: container,
@@ -62,14 +68,12 @@ Shiny.addCustomMessageHandler("load_pointcloud", function (message) {
             reader.parseAsArrayBuffer(buffer);
             renderer.resetCamera();
             renderWindow.render();
-            
+
             console.log("Point cloud loaded and rendered successfully");
         })
         .catch(error => {
             console.error("Failed to load point cloud:", error);
-            if (loader) {
-                loader.style.display = 'none';
-            }
+            if (loader) loader.style.display = 'none';
             container.style.display = 'block';
             container.innerHTML = '<div style="padding: 20px; text-align: center; color: #dc3545;">Failed to load 3D model</div>';
         });
