@@ -5,6 +5,8 @@ library(dplyr)
 library(shinyjs)
 library(shinyFeedback)
 library(emayili)
+library(googledrive)
+library(httr)
 source("components/header.R")
 source("components/footer.R")
 source("pages/landingPage.R")
@@ -32,13 +34,18 @@ home <- tags$main(
       choices = list(
         "Filter by" = "all",
         "Loot" = "Loot",
-        "MZ4250" = "MZ4250"
+        "MZ4250" = "MZ4250",
+        "StromCrow13" = "StromCrow13"
       ),
       selected = "all"
     )
   ),
   uiOutput("LandingPage")
 )
+
+if (!dir.exists(file.path("www", "plys"))) {
+  dir.create(file.path("www", "plys"), recursive = TRUE)
+}
 
 ui <- fluidPage(
 
@@ -79,6 +86,7 @@ ui <- fluidPage(
 # Server ----
 server <- function(input, output, session) { # nolint
 
+  session$userData$downloaded_plys <- character()
   router_server()
 
   minis_data <- read.csv("data.csv")
@@ -134,49 +142,92 @@ server <- function(input, output, session) { # nolint
     individual_page(params$id, minis_data) # nolint
   })
 
+  observe({
+      params <- get_query_param()
+      selected_id <- params$id
+      req(selected_id)
+      trigger_name <- paste0("trigger_viewer_", selected_id)
+      req(input[[trigger_name]])
+
+      # safe subsetting and robust id extraction
+      dataIndividual <- minis_data[minis_data$id == as.numeric(selected_id), , drop = FALSE]
+      raw_val <- as.character(if (nrow(dataIndividual) >= 1) dataIndividual$ReconstructionURL[1] else NA_character_)
+      ply_file_id <- if (length(raw_val) >= 1) raw_val[1] else NA_character_
+      message("PLY file id candidate: ", ply_file_id)
+
+      ply_filename <- paste0(selected_id, ".ply")
+      ply_path <- file.path("www", "plys", ply_filename)
+
+      tryCatch({
+        if (is.na(ply_file_id) || ply_file_id == "") stop("No valid PLY file id found")
+
+        # 1) Try direct public download (no googledrive auth required)
+        public_url <- paste0("https://drive.google.com/uc?export=download&id=", ply_file_id)
+        message("Trying public download: ", public_url)
+        res <- tryCatch(
+          httr::GET(public_url, httr::write_disk(ply_path, overwrite = TRUE), httr::timeout(60)),
+          error = function(e) { NULL }
+        )
+
+        need_api_download <- TRUE
+        if (!is.null(res) && httr::status_code(res) >= 200 && httr::status_code(res) < 400 && file.exists(ply_path) && file.size(ply_path) > 0) {
+          need_api_download <- FALSE
+          message("Public download succeeded: ", ply_path)
+        } else {
+          message("Public download failed or returned status: ", ifelse(is.null(res), "no response", httr::status_code(res)))
+        }
+
+        # 2) If public download failed, try googledrive (requires authenticated token)
+        if (need_api_download) {
+          message("Attempting googledrive::drive_download (requires auth).")
+          # quick check whether the file is visible via API
+          drv_info <- tryCatch(googledrive::drive_get(googledrive::as_id(ply_file_id)), error = function(e) NULL)
+          if (is.null(drv_info)) stop("Drive file not found or inaccessible (check permissions/token)")
+
+          googledrive::drive_download(
+            file = googledrive::as_id(ply_file_id),
+            path = ply_path,
+            overwrite = TRUE,
+            verbose = TRUE
+          )
+          if (!file.exists(ply_path) || file.size(ply_path) == 0) stop("API download completed but file not found or empty")
+          message("API download succeeded: ", ply_path)
+        }
+
+        # 3) confirm and notify client
+        if (!file.exists(ply_path)) stop("Download failed; file missing at path")
+        session$sendCustomMessage(
+          type = "load_pointcloud",
+          message = list(
+            id = paste0("viewer-", selected_id),
+            loader_id = paste0("loader-", selected_id),
+            url = paste0("/plys/", ply_filename)
+          )
+        )
+        session$userData$downloaded_plys <- c(session$userData$downloaded_plys, ply_path)
+      }, error = function(e) {
+        message("Error downloading PLY: ", e$message)
+        session$sendCustomMessage(
+          type = "load_pointcloud",
+          message = list(
+            id = paste0("viewer-", selected_id),
+            loader_id = paste0("loader-", selected_id),
+            url = NULL,
+            error = e$message
+          )
+        )
+      })
+  })
+
   current_id <- reactive({
     params <- get_query_param()
     id <- params$id
     return(id)
   })
 
-  # Handle 3D view button click
-  observeEvent(input[[paste0("btn_3d_", current_id())]], {
-    identifier <- current_id()
-    product_data <- minis_data %>% filter(id == identifier)
-    viewer_id <- paste0("viewer-", identifier)
-    image_view_id <- paste0("image-view-", identifier)
-    loader_id <- paste0("loader-", identifier)
-
-    # Hide image view and show loader
-    shinyjs::hide(image_view_id)
-    shinyjs::hide(viewer_id)
-    shinyjs::show(loader_id)
-
-    # Load the 3D model
-    shinyjs::delay(100, {
-      # Load the 3D model
-      session$sendCustomMessage("load_pointcloud", list(
-        id = viewer_id,
-        loader_id = loader_id,
-        url = paste0("Reconstructions/", product_data$Name, ".ply"),
-        type = "ply"
-      ))
-    })
-  })
-
-  observeEvent(input[[paste0("btn_image_", current_id())]], {
-    identifier <- current_id()
-    viewer_id <- paste0("viewer-", identifier)
-    image_view_id <- paste0("image-view-", identifier)
-
-    # Hide 3D viewer and show image view
-    shinyjs::hide(viewer_id)
-    shinyjs::show(image_view_id)
-  })
-
-    observeEvent(input$want_one_button, {request_one()}) # nolint
-    observe({
+  observeEvent(input$want_one_button, {request_one()}) # nolint
+  
+  observe({
       if (!is.null(input$name) && input$name != "" &&
             !is.null(input$email) && input$email != "" &&
             !is.null(input$message) && input$message != "" &&
@@ -240,6 +291,10 @@ server <- function(input, output, session) { # nolint
 
   })
 
+  session$onSessionEnded(function() {
+    files <- unique(session$userData$downloaded_plys)
+    if (length(files)) unlink(files, force = TRUE)
+  })
 
 }
 
