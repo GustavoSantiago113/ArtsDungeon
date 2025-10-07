@@ -36,6 +36,8 @@ I used Shiny R to build the whole website. To display the 3D reconstruction, I u
 4. The website retrieves images of the specific mini and displays the in the right section.
 5. In the left corner, the website retrieves the ply model and vtk.js displays it in the screen.
 
-6. The contact is done by emailing myself with the content inserted using the emayili package.
+![Individual page](readme_images/Screenshot%202025-09-01%20154603.png)
+
+1. The contact is done by emailing myself with the content inserted using the emayili package.
 
 ![Email modal](readme_images/Screenshot%202025-09-01%20154832.png)
